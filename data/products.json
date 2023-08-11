@@ -1,0 +1,18 @@
+[
+  {
+    "name": "book1",
+    "slug": "book1",
+    "description": "This is a book 1 people called book1",
+    "price": "200",
+    "qty": 5,
+    "image": "https://frontcast.ir/wp-content/uploads/2022/06/Javascript-1200800.png"
+  },
+  {
+    "name": "book2",
+    "slug": "book2",
+    "description": "This is a book 2 people called book2",
+    "price": "300",
+    "qty": 6,
+    "image": "https://frontcast.ir/wp-content/uploads/2019/09/advanced-js-cover-1.png"
+  }
+]
