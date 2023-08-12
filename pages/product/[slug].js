@@ -1,14 +1,35 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {useRouter} from "next/router";
 import Layout from "@/components/Layout";
 import Image from "next/image";
 import productItems from "@/data/products.json"
+import {CartContext} from "@/context/Cart";
 
 function ProductPage() {
+
+    const {state, dispatch} = useContext(CartContext);
+
+
     const {query} = useRouter()
     const {slug} = query
 
     const product = productItems.find(item => item.slug === slug)
+
+    if (!product) {
+        return <div>Product not found! </div>
+    }
+
+
+    const addToCartHandler = () => {
+       const existingItem =  state.cart.cartItems.find(item => (
+            item?.slug === product?.slug
+        ))
+
+        const qty = existingItem ? existingItem.qty + 1 : 1
+        console.log(qty)
+        dispatch({ type : "ADD_ITEMS" , payload : {...product , qty} })
+
+    }
 
     return (
         <Layout title={slug}>
@@ -34,7 +55,7 @@ function ProductPage() {
                         <div className="p-2"> Description : {product?.description} </div>
                     </div>
                     <div className="flex flex-col ">
-                        <button className="p-3 rounded-xl bg-gray-800 text-white font-bold">
+                        <button onClick={addToCartHandler} className="p-3 rounded-xl bg-gray-800 text-white font-bold">
                             Add To Cart
                         </button>
                     </div>
