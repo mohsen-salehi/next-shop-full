@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import Link from "next/link";
-import { CartContext } from "@/context/Cart";
+import { StoreContext } from "@/context/store";
 
 function Header() {
-  const { state, dispatch } = useContext(CartContext);
+  const { state, dispatch } = useContext(StoreContext);
   const { cart } = state;
 
   return (

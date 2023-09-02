@@ -1,9 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   images: {
-    domains: ['frontcast.ir'],
+    domains: ["frontcast.ir"],
   },
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

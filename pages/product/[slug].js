@@ -3,11 +3,12 @@ import { useRouter } from "next/router";
 import Layout from "@/components/Layout";
 import Image from "next/image";
 import productItems from "@/data/products.json";
-import { CartContext } from "@/context/Cart";
+import { StoreContext } from "@/context/store";
+import { addToCartAction } from "@/context/actions/addToCartAction";
 
 function ProductPage() {
   const [statusBtn, setStatusBtn] = useState(false);
-  const { state, dispatch } = useContext(CartContext);
+  const { state, dispatch } = useContext(StoreContext);
 
   const { query } = useRouter();
   const { slug } = query;
@@ -23,13 +24,11 @@ function ProductPage() {
       (item) => item.slug === product.slug
     );
     const qty = existingItem ? existingItem.qty + 1 : 1;
-
     if (qty > product.count) {
       setStatusBtn(true);
       return;
     }
-
-    dispatch({ type: "ADD_ITEMS", payload: { ...product, qty } });
+    addToCartAction({ ...product, qty }, dispatch);
   };
 
   return (
