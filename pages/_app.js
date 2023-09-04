@@ -1,10 +1,10 @@
 import "@/styles/globals.css";
-import { StoreContextProvidor } from "@/context/store";
+import {StoreContextProvider} from "@/context/store";
 
 export default function App({ Component, pageProps }) {
   return (
-    <StoreContextProvidor>
+    <StoreContextProvider>
       <Component {...pageProps} />
-    </StoreContextProvidor>
+    </StoreContextProvider>
   );
 }

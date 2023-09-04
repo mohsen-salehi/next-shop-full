@@ -1,7 +1,7 @@
 [
   {
     "name": "book1",
-    "slug": "book1",
+    "slug": "book-1",
     "description": "This is a book 1 people called book1",
     "price": "200",
     "count": 5,
@@ -9,7 +9,7 @@
   },
   {
     "name": "book2",
-    "slug": "book2",
+    "slug": "book-2",
     "description": "This is a book 2 people called book2",
     "price": "300",
     "count": 6,

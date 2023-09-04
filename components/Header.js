@@ -1,10 +1,21 @@
-import React, { useContext } from "react";
+import React, {useContext, useEffect, useState} from "react";
 import Link from "next/link";
 import { StoreContext } from "@/context/store";
 
 function Header() {
   const { state, dispatch } = useContext(StoreContext);
   const { cart } = state;
+
+  const [cartItemsCount , setCartItemsCount] = useState(0)
+    useEffect(() => {
+        setCartItemsCount(
+            cart?.cartItems?.reduce(
+                (previousValue, currentValue) =>
+                    previousValue + currentValue?.qty,
+                0
+            )
+        )
+    }, [cart.cartItems]);
 
   return (
     <header className="w-full rounded-xl bg-white shadow-md p-3 flex flex-wrap justify-between">
@@ -14,13 +25,9 @@ function Header() {
       <nav className="w-auto ">
         <Link className="mx-2" href="/cart">
           Cart
-          {cart.cartItems?.length > 0 && (
+          {cartItemsCount > 0 && (
             <span className="mx-1 bg-stone-500 px-1 text-white rounded-xl text-xs">
-              {cart?.cartItems.reduce(
-                (previousValue, currentValue) =>
-                  previousValue + currentValue?.qty,
-                0
-              )}
+                {cartItemsCount}
             </span>
           )}
         </Link>
