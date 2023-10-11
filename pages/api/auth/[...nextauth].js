@@ -1,6 +1,6 @@
 import NextAuth from "next-auth/next";
 
-import CredentialsProvider  from "next-auth/providers";
+import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs"
 
 import db from "@/utils/db";
@@ -28,12 +28,12 @@ export default NextAuth({
   },
   providers : [
     CredentialsProvider({
-        async authorize(credentinals){
+        async authorize(credentials){
             await db.connect()
-            const user = await User.findOne({
-                email : credentinals.email,
+            const user = await User?.findOne({
+                email : credentials?.email,
             })
-            if(user && bcrypt.compareSync(credentinals.password , user.password)){
+            if(user && bcrypt.compareSync(credentials?.password , user.password)){
                 return {
                     _id : user._id ,
                     name : user.name ,
@@ -42,7 +42,7 @@ export default NextAuth({
                     isAdmin : user.isAdmin
                 }
             }
-            throw new Error("invalid email or password")
+
         }
     })
   ]

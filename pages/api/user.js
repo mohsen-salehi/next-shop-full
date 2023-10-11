@@ -8,6 +8,7 @@ async function handler(req, res) {
     await User.deleteMany()
 
     await User.insertMany(users)
+
     res.send({message : "user Added"})
 }
 

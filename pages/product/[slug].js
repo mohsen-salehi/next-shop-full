@@ -2,7 +2,7 @@ import React, {useContext, useState} from "react";
 import {useRouter} from "next/router";
 import Layout from "@/components/Layout";
 import Image from "next/image";
-import productItems from "@/data/products.json";
+import productItems from "@/data/products.js";
 import {StoreContext} from "@/context/store";
 import {addToCartAction} from "@/context/actions/addToCartAction";
 

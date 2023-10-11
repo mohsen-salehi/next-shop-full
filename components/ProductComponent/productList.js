@@ -1,10 +1,13 @@
 import React from "react";
-import productItems from "@/data/products.json";
 import Link from "next/link";
 import Image from "next/image";
 
-function ProductList() {
-  return productItems.map((item, index) => (
+
+
+
+function ProductList({products}) {
+  console.log(products)
+  return products?.map((item, index) => (
     <div
       key={index}
       className="col-span-4 md:col-span-1 h-fit hover:shadow-xl duration-300 overflow-hidden p-2 rounded-xl bg-white shadow "
