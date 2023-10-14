@@ -4,7 +4,10 @@ import {StoreContext} from "@/context/store";
 import Image from "next/image";
 import React, {useContext, useEffect, useState} from "react";
 import {useRouter} from "next/router";
-
+import {toast} from "react-toastify";
+import Link from "next/link";
+import {useSession} from "next-auth/react";
+import dynamic from "next/dynamic";
 
 function CartPage() {
     const {state, dispatch} = useContext(StoreContext);
@@ -14,10 +17,20 @@ function CartPage() {
         setCartValue(cartItems)
     } , [cartItems])
     const router = useRouter()
-    // if (!cartItems) {
-    //     // router.push('/')
-    //     return <div>cart is empty</div>;
-    // }
+
+    const {status} = useSession()
+
+
+    if (cartItems.length < 1 ) {
+        return   <Layout title="cart">
+            <div className="w-full flex flex-wrap  justify-center items-center">
+                <h3 className="bg-red-300 rounded-xl w-full  text-center p-4">
+                    Cart is empty
+                </h3>
+                <Link className="bg-stone-600 p-2 text-white rounded-xl mt-3" href={"/"}>Go To Home</Link>
+            </div>
+        </Layout>
+    }
     return (
         <Layout title="cart">
             <section className="shadow flex flex-wrap justify-between w-full bg-white rounded-xl p-10">
@@ -35,7 +48,10 @@ function CartPage() {
                                 <h3 className="w-full p-2 m-0 justify-between items-center rounded-xl font-bold bg-stone-100 flex">
                                     {item?.name}
                                     <button
-                                        onClick={() => deleteItemAction(item, dispatch)}
+                                        onClick={() => {
+                                            deleteItemAction(item, dispatch)
+                                            toast.error("Product Removed .")
+                                        }}
                                         className="rounded-xl p-1 px-3 text-xs text-white bg-red-600 duration-500 active:bg-red-500"
                                     >
                                         Delete
@@ -56,7 +72,9 @@ function CartPage() {
                         Total Price :  {cartValue.reduce((acc, cur) => acc + (cur.qty * Number(cur.price)), 0)}
                     </div>
                     <div className="w-full flex justify-center items-center">
-                        <button onClick={()=> router.push("/shipping")} className="w-full flex rounded-xl bg-stone-600 text-white p-2 justify-center">Checkout</button>
+                        <button onClick={()=> {
+                            status === "authenticated" ? router.push("/shipping") : router.push("/login")
+                        }} className="w-full flex rounded-xl bg-stone-600 text-white p-2 justify-center">Checkout</button>
                     </div>
                 </div>
             </section>
@@ -64,4 +82,4 @@ function CartPage() {
     );
 }
 
-export default CartPage;
+export default dynamic(() => Promise.resolve(CartPage) , {ssr : false});

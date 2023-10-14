@@ -28,6 +28,23 @@ export const cartReducer = (state, action) => {
          cart: {cartItems : currentItem}
        };
     }
+    case  "SAVE_SHIPPING_DATA" : return {
+      ...state ,
+      cart: {
+        ...state.cart ,
+        shippingData : {
+          ...state.cart.shippingData,
+          ...action.payload
+        }
+      }
+    }
+    case "SAVE_PAYMENT_METHOD" : return {
+      ...state,
+      cart: {
+        ...state.cart,
+        paymentMethod : action.payload
+      }
+    }
     default:
       return state;
   }

@@ -5,8 +5,7 @@ import Image from "next/image";
 
 
 
-function ProductList({products}) {
-  console.log(products)
+function ProductList({products , addToCart}) {
   return products?.map((item, index) => (
     <div
       key={index}
@@ -28,7 +27,7 @@ function ProductList({products}) {
       </p>
       <div className="flex w-full p-1 justify-between items-center mt-2">
         <strong className="p-0 m-0 font-bold">Price : {item?.price}</strong>
-        <button className="bg-gray-800 m-0 p-2 rounded-xl text-white text-sm">
+        <button onClick={() => addToCart(item)} className="bg-gray-800 m-0 p-2 rounded-xl text-white text-sm">
           Add To Cart
         </button>
       </div>

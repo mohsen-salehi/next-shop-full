@@ -1,14 +1,16 @@
 import { Field, useField } from "formik";
 import React from "react";
 
-function InputValidation({ label, ...props }) {
-  const [field, meta, helper] = useField(props);
+function InputValidation({label, ...props }) {
+  const [field, meta, {setValue}] = useField(props);
 
   return (
     <div className="w-full flex flex-wrap my-2">
       <Field
         {...field}
         {...props}
+        onInput={(e) => {
+            setValue(props.name , e.target.value)}}
         className="p-2 rounded-xl w-full focus:outline-0 border flex"
       />
       {meta?.error ? (

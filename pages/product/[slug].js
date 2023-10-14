@@ -2,18 +2,19 @@ import React, {useContext, useState} from "react";
 import {useRouter} from "next/router";
 import Layout from "@/components/Layout";
 import Image from "next/image";
-import productItems from "@/data/products.js";
 import {StoreContext} from "@/context/store";
 import {addToCartAction} from "@/context/actions/addToCartAction";
+import db from "@/utils/db";
+import Product from "@/models/product";
+import {toast} from "react-toastify";
 
-function ProductPage() {
+function ProductPage({product}) {
     const [statusBtn, setStatusBtn] = useState(false);
     const {state, dispatch} = useContext(StoreContext);
     const router = useRouter()
-    const { query} = useRouter();
+    const {query} = useRouter();
     const {slug} = query;
 
-    const product = productItems.find((item) => item.slug === slug);
 
     if (!product) {
         return <div>Product not found! </div>;
@@ -30,7 +31,8 @@ function ProductPage() {
             setStatusBtn(true);
             return;
         }
-        // router?.push('/cart')
+        router?.push('/cart')
+        toast.success("Product Added .")
         addToCartAction({...product, qty}, dispatch);
     };
     return (
@@ -80,3 +82,20 @@ function ProductPage() {
 }
 
 export default ProductPage;
+
+
+export const getServerSideProps = async (context) => {
+    const {params} = context
+    const {slug} = params
+
+    await db.connect()
+    const product = await Product.findOne({slug}).lean()
+    return {
+        props: {
+            product: product ? db.convertToObject(product) : null
+        }
+    }
+
+}
+
+
