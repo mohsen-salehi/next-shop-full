@@ -1,6 +1,6 @@
 import Layout from "@/components/Layout";
 import {Form, Formik} from "formik";
-import {loginValidation} from "./schema/validation";
+import {loginValidation} from "@/components/schema/validation";
 import InputValidation from "@/components/inputs/inputValidation";
 import {signIn, useSession} from "next-auth/react"
 import {useEffect} from "react";
