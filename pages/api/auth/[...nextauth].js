@@ -26,6 +26,9 @@ export default NextAuth({
       return session ;
     },
   },
+
+  //blue 
+
   providers : [
     CredentialsProvider({
         async authorize(credentials){
